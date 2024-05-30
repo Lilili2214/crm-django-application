@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import CreateUserForm, LoginForm
+from .forms import CreateUserForm, LoginForm, CreateRecordForm, UpdateRecordForm
 from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate
 
@@ -18,8 +18,7 @@ def register(request):
         form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
-
-            #return redirect("")
+            return redirect("login")
 
     context = {'form': form}
     return render(request,"webapp/register.html", context=context)
@@ -49,6 +48,40 @@ def user_logout(request):
 
 @login_required(login_url='login')
 def dashboard(request):
+
     my_records= Record.objects.all()
     context= {'records': my_records}
     return render(request, 'webapp/dashboard.html', context= context)
+
+
+@login_required(login_url="login")
+def create_record(request):
+    form = CreateRecordForm()
+    if request.method == "POST":
+        form = CreateRecordForm(request.POST )
+        if form.is_valid():
+            form.save()
+            return redirect("dashboard")
+    context= {'formcreaterecord': form}
+    return render(request, 'webapp/create-record.html', context=context)
+
+
+@login_required(login_url="login")
+def udpate_record(request, pk):
+   
+    record = Record.objects.get(id=pk)
+    form = UpdateRecordForm(instance=record)
+    if request.method=="POST":
+        form = UpdateRecordForm(request.POST, instance=record)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard')
+    context= {'formupdaterecord': form}
+    return render(request, 'webapp/update-record.html', context=context)
+
+
+@login_required(login_url="login")
+def view_singular(request, pk):
+    record = Record.objects.get(id=pk)
+    context= {'record': record}
+    return render(request, 'webapp/view-record.html', context=context)
