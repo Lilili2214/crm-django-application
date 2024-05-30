@@ -6,7 +6,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm
  # -- Register/CreateUser 
 from django.forms.widgets import PasswordInput, TextInput
-class CreateUserForm(UserCreateForm):
+class CreateUserForm(UserCreationForm):
     class Meta:
         model= User
         fields= [
