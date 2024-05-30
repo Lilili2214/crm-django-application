@@ -5,8 +5,8 @@
 <body>
     <div class="card" >
         <div class="card-body">
-          <h5 class="card-title">{{record.first_name}}  {{record.last_name}}</h5>
-          
+          <h5 class="card-title"><strong>{{record.first_name}}  {{record.last_name}}</strong></h5>
+          <hr>
           <p class="card-text"><strong>Email:    </strong>{{record.email}}</p>
           <p class="card-text"><strong>Phone:    </strong>{{record.phone}}</p>
           <p class="card-text"><strong>Address:    </strong>{{record.address}}</p>
@@ -22,7 +22,7 @@
       &nbsp;  &nbsp;  &nbsp;
       <a href="{% url 'update-record' record.id  %}" class="btn btn-primary btn-lg" role="button" aria-disabled="true">Edit</a>
       &nbsp;  &nbsp;  &nbsp;
-      <a href="{% url 'dashboard' %}" class="btn btn-danger btn-lg" role="button" aria-disabled="true">Delete</a>
+      <a href="{% url 'delete-record' record.id  %}" class="btn btn-danger btn-lg" role="button" aria-disabled="true">Delete</a>
       
     </body>
 {% endblock  %}

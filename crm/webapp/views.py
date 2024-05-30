@@ -75,7 +75,7 @@ def udpate_record(request, pk):
         form = UpdateRecordForm(request.POST, instance=record)
         if form.is_valid():
             form.save()
-            return redirect('dashboard')
+            return redirect('view-record', pk=pk)
     context= {'formupdaterecord': form}
     return render(request, 'webapp/update-record.html', context=context)
 
@@ -85,3 +85,9 @@ def view_singular(request, pk):
     record = Record.objects.get(id=pk)
     context= {'record': record}
     return render(request, 'webapp/view-record.html', context=context)
+
+@login_required(login_url="login")
+def delete_record(request, pk):
+    record = Record.objects.get(id=pk)
+    record.delete()
+    return redirect("dashboard")
