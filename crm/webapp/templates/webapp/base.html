@@ -1,4 +1,6 @@
+
 {% load static %}
+
 
 <!DOCTYPE html>
 
@@ -18,10 +20,27 @@
         <div class= "container">
             <br>
             <!-- Notification messages -->
-            {% block content %}
+            {% for message in messages  %}
+            
+            {% if message.level_tag == 'success' %}
+                <p id =class= 'alert alert-success float-center text-center message-text'>
+                    <i class ='fa fa-check' aria-hidden='true'></i> &nbsp; {{message}}
+
+
+                </p>
+            {% else %}
+            <p class= 'alert alert-danger float-center text-center message-text'>
+                <i class ='fa fa-check' aria-hidden='true'></i> &nbsp; {{message}}
+
+
+            </p>
+            {% endif %}
+
+            {% endfor %}
+        
+        {% block content %}
             
             {% endblock %}
-        
         
         </div>
         <script src="{% static "js/app.js" %}"></script>
